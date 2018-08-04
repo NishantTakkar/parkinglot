@@ -19,6 +19,7 @@ public class Tests {
     @Before
     public void setUp() throws ParkingException {
         parkingLot = new ParkingLot(CAPACITY);
+
     }
 
     @Test
