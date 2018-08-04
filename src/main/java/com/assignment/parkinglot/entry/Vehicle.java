@@ -1,6 +1,7 @@
 package com.assignment.parkinglot.entry;
 
-import com.assignment.parking.enums.ParkingSpotSize;
+
+import com.assignment.parkinglot.enums.ParkingSpotSize;
 
 public class Vehicle {
 
