@@ -1,6 +1,8 @@
 package com.assignment.parkinglot;
 
+
 import com.assignment.parkinglot.entry.ParkingLot;
+import com.assignment.parkinglot.entry.ParkingSpot;
 import com.assignment.parkinglot.exception.ParkingException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,7 +11,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tests {
+public class ParkingLotTest {
 
 
     private static final Long CAPACITY = 6l;
@@ -17,9 +19,8 @@ public class Tests {
     private ParkingLot parkingLot;
 
     @Before
-    public void setUp() throws ParkingException {
+    public void setUp() throws  ParkingException {
         parkingLot = new ParkingLot(CAPACITY);
-
     }
 
     @Test
@@ -30,7 +31,7 @@ public class Tests {
         Assert.assertTrue(CAPACITY.equals(parkingLot.getCapacity()));
     }
 
-    @Test( expected= ParkingException.class)
+    @Test(expected = ParkingException.class)
     public void shouldThrowInvalidCapacityException() throws ParkingException {
         final long INVALID_CAPACITY = -1;
         ParkingLot parkingLot = new ParkingLot(INVALID_CAPACITY);
@@ -71,14 +72,15 @@ public class Tests {
         Assert.assertTrue(parkedSlot.equals(freedSlot));
     }
 
+
     @Test
-    public void shouldProvideSlotNumbersIfQueriedOnVehicleColour() throws ParkingException {
+    public void shouldProvideSlotNumbersIfQueriedOnVehicleColour() throws ParkingException{
         final String[] registrationNumber = {"KA-2028-23-040", "MP-2028-23-041", "WB-2028-23-042", "RJ-2028-23-043"};
         final String[] colour = {"black", "white", "black", "red"};
         List<Long> expectedBlackSlots = new ArrayList<>();
         for (int i = 0; i < registrationNumber.length; i++) {
-            Long slot = parkingLot.park(registrationNumber[i], colour[i]);
-            if (colour[i].equalsIgnoreCase("Black"))
+            Long slot =  parkingLot.park(registrationNumber[i], colour[i]);
+            if(colour[i].equalsIgnoreCase("Black"))
                 expectedBlackSlots.add(slot);
         }
         List<Long> actualBlackSlots = parkingLot.getSlotNumbers("Black");
@@ -88,13 +90,13 @@ public class Tests {
     }
 
     @Test
-    public void shouldProvideRegistrationNumbersIfQueriedOnVehicleColour() throws ParkingException {
+    public void shouldProvideRegistrationNumbersIfQueriedOnVehicleColour() throws ParkingException{
         final String[] registrationNumber = {"KA-2028-23-040", "MP-2028-23-041", "WB-2028-23-042", "RJ-2028-23-043"};
         final String[] colour = {"black", "white", "black", "red"};
         List<String> expectedBlackRegNumber = new ArrayList<>();
         for (int i = 0; i < registrationNumber.length; i++) {
-            Long slot = parkingLot.park(registrationNumber[i], colour[i]);
-            if (colour[i].equalsIgnoreCase("Black"))
+            Long slot =  parkingLot.park(registrationNumber[i], colour[i]);
+            if(colour[i].equalsIgnoreCase("Black"))
                 expectedBlackRegNumber.add(registrationNumber[i]);
         }
         List<String> actualBlackRegNumber = parkingLot.getRegistrationNumbers("Black");
@@ -104,10 +106,10 @@ public class Tests {
     }
 
     @Test
-    public void shouldProvideSlotNumberIfQueriedOnVehicleRegistrationNumber() throws ParkingException {
+    public void shouldProvideSlotNumberIfQueriedOnVehicleRegistrationNumber() throws ParkingException{
         final String registrationNumber = "RJ-2028-23-043";
         final String colour = "black";
-        Long expectedParkedSlot = parkingLot.park(registrationNumber, colour);
+        Long expectedParkedSlot = parkingLot.park(registrationNumber,colour);
         Long actualParkedSlot = parkingLot.getSlotNumber(registrationNumber);
 
         Assert.assertEquals(expectedParkedSlot, actualParkedSlot);
