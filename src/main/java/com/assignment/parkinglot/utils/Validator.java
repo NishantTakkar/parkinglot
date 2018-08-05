@@ -1,15 +1,16 @@
-package com.assignment.parkinglot.validator;
+package com.assignment.parkinglot.utils;
 
+import com.assignment.parkinglot.entry.ParkingLot;
 import com.assignment.parkinglot.entry.ParkingSpot;
 import com.assignment.parkinglot.exception.ParkingException;
 
+import java.util.Map;
 import java.util.Objects;
 
-import static com.assignment.parkinglot.exception.ErrorMessage.INVALID_VEHICLE_COLOUR;
-import static com.assignment.parkinglot.exception.ErrorMessage.INVALID_VEHICLE_REGISTRATION_NUMBER;
-import static com.assignment.parkinglot.exception.ErrorMessage.VEHICLE_NOT_FOUND;
+import static com.assignment.parkinglot.exception.ErrorMessage.*;
 
 public class Validator {
+
 
     public static boolean validateVehicleRegNumber(String registrationNumber) throws ParkingException {
 
@@ -31,6 +32,19 @@ public class Validator {
         if (Objects.isNull(parkingSpot))
             throw new ParkingException(VEHICLE_NOT_FOUND);
 
+        return true;
+    }
+
+    public static boolean validateParkingLot(ParkingLot parkingLot) throws ParkingException {
+        if (Objects.isNull(parkingLot))
+            throw new ParkingException(PARKING_LOT_NOT_FOUND);
+
+        return true;
+    }
+
+    public static boolean checkForAlreadyParked(Map<String,ParkingSpot> vehicleRegNoToParkingSlotMap,String registrationNumber) throws ParkingException {
+        if (Objects.nonNull(vehicleRegNoToParkingSlotMap.get(registrationNumber.toUpperCase())))
+            throw new ParkingException(VEHICLE_ALREADY_PARKED, registrationNumber);
         return true;
     }
 

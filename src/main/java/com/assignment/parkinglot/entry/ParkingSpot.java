@@ -2,6 +2,8 @@ package com.assignment.parkinglot.entry;
 
 
 import com.assignment.parkinglot.enums.ParkingSpotSize;
+import com.assignment.parkinglot.manager.ParkingTypeSelectionManager;
+import com.assignment.parkinglot.manager.impl.ParkingTypeSelectionManagerImpl;
 
 public class ParkingSpot {
 
@@ -11,20 +13,22 @@ public class ParkingSpot {
 
     private Vehicle vehicle;
 
-    private ParkingSpotSize parkingSpotSize;
+    private ParkingDimension parkingDimension;
+
+    private ParkingTypeSelectionManager parkingTypeSelectionManager=new ParkingTypeSelectionManagerImpl();
 
     private final ParkingSpotSize defaultSize=ParkingSpotSize.MEDIUM;
 
     public ParkingSpot(Long slotNumber, ParkingSpotSize parkingSpotSize) {
         this.slotNumber = slotNumber;
         this.isVacant = true;
-        this.parkingSpotSize=parkingSpotSize;
+        this.parkingDimension=parkingTypeSelectionManager.getParkingDimension(parkingSpotSize);
     }
 
     public ParkingSpot(Long slotNumber) {
         this.slotNumber = slotNumber;
         this.isVacant = true;
-        this.parkingSpotSize=defaultSize;
+        this.parkingDimension=parkingTypeSelectionManager.getParkingDimension(defaultSize);
     }
 
 
