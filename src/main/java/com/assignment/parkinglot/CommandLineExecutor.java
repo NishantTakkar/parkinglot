@@ -1,27 +1,31 @@
 package com.assignment.parkinglot;
 
-import com.assignment.parkinglot.entry.ParkingLot;
 import com.assignment.parkinglot.exception.ParkingException;
+import com.assignment.parkinglot.manager.ParkingManager;
+import com.assignment.parkinglot.manager.impl.ParkingManagerImpl;
+import com.assignment.parkinglot.utils.Validator;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.assignment.parkinglot.exception.ErrorMessage.*;
+import static com.assignment.parkinglot.utils.CommandHelper.*;
 
 public class CommandLineExecutor {
 
     private final static String DELIMITER = ", ";
-    ParkingLot parkingLot = null;
+
+    ParkingManager parkingManager=new ParkingManagerImpl();
+
 
     public void execute(String[] arguments) throws ParkingException {
         switch (arguments[0]) {
-            case "create_parking_lot":
+            case CREATE_PARKING_LOT_COMMAND:
                 if (arguments.length < 2)
                     throw new ParkingException(INVALID_COMMAND_FORMAT, arguments[0], "<capacity>");
 
                 try {
-                    parkingLot = new ParkingLot(Long.parseLong(arguments[1]));
+                    parkingManager.createParkingLot(Long.parseLong(arguments[1]));
                     System.out.println("Created a parking lot with " + arguments[1] + " slots");
                 } catch (NumberFormatException e) {
                     throw new ParkingException(INVALID_CAPACITY);
@@ -29,70 +33,65 @@ public class CommandLineExecutor {
 
                 break;
 
-            case "leave":
+            case LEAVE_COMMAND:
                 if (arguments.length < 2)
                     throw new ParkingException(INVALID_COMMAND_FORMAT, arguments[0], "<slot_number>");
 
-                if (Objects.isNull(parkingLot))
-                    throw new ParkingException(PARKING_LOT_NOT_FOUND);
-
+                Validator.validateParkingLot(parkingManager.getParkingLot());
                 try {
-                    Long slotNumber = parkingLot.remove(Long.parseLong(arguments[1]));
+                    Long slotNumber = parkingManager.remove(Long.parseLong(arguments[1]));
                     System.out.println("Slot number " + arguments[1] + " is free");
                 } catch (NumberFormatException e) {
                     System.out.println(INVALID_SLOT_NUMBER);
                 }
                 break;
 
-            case "park":
+            case PARK_COMMAND:
                 if (arguments.length < 3)
                     throw new ParkingException(INVALID_COMMAND_FORMAT, arguments[0], "<registration_number> <colour>");
 
-                if (Objects.isNull(parkingLot))
-                    throw new ParkingException(PARKING_LOT_NOT_FOUND);
+                Validator.validateParkingLot(parkingManager.getParkingLot());
 
-                Long slotNumber = parkingLot.park(arguments[1], arguments[2]);
+                Long slotNumber = parkingManager.park(arguments[1], arguments[2]);
                 System.out.println("Allocated slot number: " + slotNumber);
                 break;
 
-            case "registration_numbers_for_cars_with_colour":
+            case REG_NO_FOR_CARS_COLOR_COMMAND:
                 if (arguments.length < 2)
                     throw new ParkingException(INVALID_COMMAND_FORMAT, arguments[0], "<colour>");
 
-                if (Objects.isNull(parkingLot))
-                    throw new ParkingException(PARKING_LOT_NOT_FOUND);
+                Validator.validateParkingLot(parkingManager.getParkingLot());
 
-                List<String> registrationNumbers = parkingLot.getRegistrationNumbers(arguments[1]);
+                List<String> registrationNumbers = parkingManager.getRegistrationNumbers(arguments[1]);
                 System.out.println(String.join(DELIMITER, registrationNumbers));
                 break;
 
-            case "slot_numbers_for_cars_with_colour":
+            case SLOT_NUMBER_FOR_CAR_COLOR_COMMAND:
                 if (arguments.length < 2)
                     throw new ParkingException(INVALID_COMMAND_FORMAT, arguments[0], "<colour>");
 
-                if (Objects.isNull(parkingLot))
-                    throw new ParkingException(PARKING_LOT_NOT_FOUND);
+                Validator.validateParkingLot(parkingManager.getParkingLot());
 
-                List<Long> colours = parkingLot.getSlotNumbers(arguments[1]);
+                List<Long> colours = parkingManager.getSlotNumbers(arguments[1]);
                 System.out.println(colours.stream()
                         .map(colour -> String.valueOf(colour))
                         .collect(Collectors.joining(DELIMITER)));
                 break;
 
-            case "slot_number_for_registration_number":
+            case SLOT_NUMBER_FOR_CAR_REG_NO_COMMAND:
                 if (arguments.length < 2) {
                     throw new ParkingException(INVALID_COMMAND_FORMAT, arguments[0], "<colour>");
                 }
-                System.out.println(parkingLot.getSlotNumber(arguments[1]));
+                System.out.println(parkingManager.getSlotNumber(arguments[1]));
                 break;
 
-            case "status":
-                if (Objects.isNull(parkingLot))
-                    throw new ParkingException(PARKING_LOT_NOT_FOUND);
-
-                parkingLot.getOccupiedParkingSpots().values()
+            case STATUS_COMMAND:
+                Validator.validateParkingLot(parkingManager.getParkingLot());
+                parkingManager.getParkingLot().getOccupiedParkingSpots().values()
                         .forEach(parkingSpot -> System.out.println(parkingSpot.getParkingStatus()));
                 break;
+
+
         }
     }
 

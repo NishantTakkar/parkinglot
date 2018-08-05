@@ -7,11 +7,8 @@ import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Scanner;
 
-/**
- * Hello world!
- *
- */
 public class Runner {
+
     private final static String SPLITTER = " ";
 
     private final static String QUIT = "quit";
