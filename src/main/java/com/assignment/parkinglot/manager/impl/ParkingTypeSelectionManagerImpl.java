@@ -7,13 +7,13 @@ import com.assignment.parkinglot.manager.ParkingTypeSelectionManager;
 
 public class ParkingTypeSelectionManagerImpl implements ParkingTypeSelectionManager {
 
-    private static final Long MEDIUM_DIMENSION=10l;
+
     public ParkingDimension getParkingDimension(ParkingSpotSize parkingSpotSize){
 
         switch (parkingSpotSize){
 
             case MEDIUM:
-                return new MediumSizeParkingDimension(MEDIUM_DIMENSION,MEDIUM_DIMENSION,MEDIUM_DIMENSION);
+                return new MediumSizeParkingDimension();
             case LARGE:
                 //multiple Types can be implemented here;
                 return null;
