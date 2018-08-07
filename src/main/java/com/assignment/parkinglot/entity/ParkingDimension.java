@@ -1,4 +1,4 @@
-package com.assignment.parkinglot.entry;
+package com.assignment.parkinglot.entity;
 
 public class ParkingDimension {
 

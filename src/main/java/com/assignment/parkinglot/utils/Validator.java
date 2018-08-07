@@ -1,7 +1,7 @@
 package com.assignment.parkinglot.utils;
 
-import com.assignment.parkinglot.entry.ParkingLot;
-import com.assignment.parkinglot.entry.ParkingSpot;
+import com.assignment.parkinglot.entity.ParkingLot;
+import com.assignment.parkinglot.entity.ParkingSpot;
 import com.assignment.parkinglot.exception.ParkingException;
 
 import java.util.Map;

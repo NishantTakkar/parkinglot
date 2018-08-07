@@ -1,4 +1,4 @@
-package com.assignment.parkinglot.entry;
+package com.assignment.parkinglot.entity;
 
 import com.assignment.parkinglot.enums.ParkingSpotSize;
 import com.assignment.parkinglot.exception.ParkingException;

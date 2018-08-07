@@ -1,6 +1,6 @@
 package com.assignment.parkinglot.manager.impl;
 
-import com.assignment.parkinglot.entry.ParkingLot;
+import com.assignment.parkinglot.entity.ParkingLot;
 import com.assignment.parkinglot.exception.ParkingException;
 import com.assignment.parkinglot.manager.ParkingManager;
 

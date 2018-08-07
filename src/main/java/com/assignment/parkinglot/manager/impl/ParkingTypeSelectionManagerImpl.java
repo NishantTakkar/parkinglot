@@ -1,7 +1,7 @@
 package com.assignment.parkinglot.manager.impl;
 
-import com.assignment.parkinglot.entry.MediumSizeParkingDimension;
-import com.assignment.parkinglot.entry.ParkingDimension;
+import com.assignment.parkinglot.entity.MediumSizeParkingDimension;
+import com.assignment.parkinglot.entity.ParkingDimension;
 import com.assignment.parkinglot.enums.ParkingSpotSize;
 import com.assignment.parkinglot.manager.ParkingTypeSelectionManager;
 

@@ -1,8 +1,7 @@
 package com.assignment.parkinglot;
 
 
-import com.assignment.parkinglot.entry.ParkingLot;
-import com.assignment.parkinglot.entry.ParkingSpot;
+import com.assignment.parkinglot.entity.ParkingLot;
 import com.assignment.parkinglot.exception.ParkingException;
 import org.junit.Assert;
 import org.junit.Before;
